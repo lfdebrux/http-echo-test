@@ -1,0 +1,22 @@
+
+applications:
+- name: echo-base
+  docker:
+    image: lfdebrux/http-echo-test
+  command: "/http-echo-test.sh http-echo-test.apps.internal:8080"
+  health-check-type: process
+  no-route: true
+- name: echo-1
+  docker:
+    image: kennship/http-echo
+  env:
+    SERVICE_NAME: echo-1
+  routes:
+  - route: http-echo-test.apps.internal
+- name: echo-2
+  docker:
+    image: kennship/http-echo
+  env:
+    SERVICE_NAME: echo-2
+  routes:
+  - route: http-echo-test.apps.internal
